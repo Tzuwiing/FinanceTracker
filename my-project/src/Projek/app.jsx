@@ -4,24 +4,21 @@ import TransactionForm from "./TransactionForm";
 import TransactionList from "./TransactionList";
 
 function App() {
-  const [transaksi, setTransaksi] = useState([]);
-
-  // 🔹 Muat data dari localStorage saat pertama kali
-  useEffect(() => {
+  const [transaksi, setTransaksi] = useState(() => {
     const dataTersimpan = localStorage.getItem("transaksi");
     if (dataTersimpan) {
       try {
         const parsed = JSON.parse(dataTersimpan);
         if (Array.isArray(parsed)) {
-          setTransaksi(parsed);
+          return parsed;
         }
       } catch (e) {
         console.error("❌ Gagal parse localStorage:", e);
       }
     }
-  }, []);
+    return [];
+  });
 
-  // 🔹 Simpan ke localStorage setiap kali transaksi berubah
   useEffect(() => {
     localStorage.setItem("transaksi", JSON.stringify(transaksi));
   }, [transaksi]);
@@ -44,3 +41,4 @@ function App() {
 }
 
 export default App;
+
