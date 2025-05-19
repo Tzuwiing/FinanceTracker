@@ -8,58 +8,55 @@ function TransactionForm({ onAdd }) {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!deskripsi || !jumlah || jumlah <= 0 || !tipe) {
-      alert("Mohon isi semua data dengan benar.");
+    if (!deskripsi.trim() || !jumlah || jumlah <= 0 || !tipe) {
+      alert("Lengkapi semua form dengan benar!");
       return;
     }
 
-    onAdd({
+    const transaksiBaru = {
       id: Date.now(),
       deskripsi,
       jumlah: parseFloat(jumlah),
       tipe,
-    });
+    };
 
+    onAdd(transaksiBaru);
     setDeskripsi("");
     setJumlah("");
     setTipe("");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="p-6 bg-white shadow-md rounded-lg">
-      <h2 className="text-xl font-bold mb-4">Tambah Transaksi</h2>
-
+    <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow space-y-4">
+      <h2 className="text-xl font-bold text-gray-700">Tambah Transaksi</h2>
       <input
         type="text"
         placeholder="Deskripsi"
         value={deskripsi}
         onChange={(e) => setDeskripsi(e.target.value)}
-        className="w-full mb-4 p-2 border rounded"
+        className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
-
       <input
         type="number"
         placeholder="Jumlah"
         value={jumlah}
         onChange={(e) => setJumlah(e.target.value)}
-        className="w-full mb-4 p-2 border rounded"
+        className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
       />
-
       <select
         value={tipe}
         onChange={(e) => setTipe(e.target.value)}
-        className="w-full mb-4 p-2 border rounded"
+        className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
       >
         <option value="">Pilih Tipe</option>
         <option value="pemasukan">Pemasukan</option>
         <option value="pengeluaran">Pengeluaran</option>
       </select>
-
       <button
         type="submit"
-        className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
+        className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition duration-200"
       >
-        Tambahkan
+        Tambah Transaksi
       </button>
     </form>
   );
